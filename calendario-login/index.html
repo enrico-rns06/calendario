@@ -8,12 +8,45 @@
 </head>
 <body>
     <header>
-        <span>Krónos</span>
-        <span id="nomeUsuario"></span>
-        <button id="btnSair">Sair</button>
+        <span class="header-logo">Krón<span>os</span></span>
+        <div class="header-right">
+            <span id="nomeUsuario"></span>
+            <button id="btnSair">Sair</button>
+        </div>
     </header>
 
+    <div class="nav-mes">
+        <h2 id="monthTitle"></h2>
+        <div class="nav-btns">
+            <button class="nav-btn" onclick="mudarMes(-1)">‹</button>
+            <button class="nav-btn" onclick="mudarMes(1)">›</button>
+        </div>
+    </div>
+
+    <div class="weekdays">
+        <div class="weekday">Dom</div>
+        <div class="weekday">Seg</div>
+        <div class="weekday">Ter</div>
+        <div class="weekday">Qua</div>
+        <div class="weekday">Qui</div>
+        <div class="weekday">Sex</div>
+        <div class="weekday">Sáb</div>
+    </div>
+
     <div id="calendar"></div>
+
+    <div class="overlay" id="overlay" onclick="fecharModal(event)">
+        <div class="modal">
+            <p class="modal-date" id="modalDate"></p>
+            <h2 class="modal-title">Tarefas de hoje</h2>
+            <div class="input-row">
+                <input type="text" id="taskInput" placeholder="Nova tarefa..." maxlength="60"/>
+                <button class="btn-modal-add" onclick="adicionarTarefaDia()">+ Add</button>
+            </div>
+            <div class="modal-tasks" id="modalTasks"></div>
+            <button class="modal-close" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
 
     <script src="app.js"></script>
 </body>
