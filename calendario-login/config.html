@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    <span class="header-logo">Krón<span>os</span></span>
+    <div class="header-right">
+        <span id="nomeUsuario"></span>
+        <a href="index.html">← Voltar</a>
+    </div>
+</header>
+    <main>
+        <form id="mudarSenha" class="config-section">
+            <h2>Mudar senha</h2>
+            <br><br>
+            <label>Senha Atual</label>
+            <input type="password" id="senhaAtual">
+            <br><br>
+
+            <label>Nova senha</label>
+            <input type="password" id="novaSenha">
+            <br><br>
+
+            <label>Confirmar nova senha</label>
+            <input type="password" id="confirmarSenha">
+            <br><br>
+
+            <button type="submit">Salvar mudanças</button>
+            <br><br>
+        </form>
+
+        <form id="apagarConta" class="config-section">
+            <h2>Apagar conta</h2>
+            <br><br>
+            <button type="submit">Apagar conta</button>
+            <br><br>
+            <p>Essa é uma ação irreversível</p>
+        </form>
+    </main>
+    <script src="config.js"></script>
+    
+</body>
+</html>

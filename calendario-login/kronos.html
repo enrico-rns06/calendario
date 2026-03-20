@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Krónos — Sobre o Projeto</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#05060F;
+  --surface:#0D1117;
+  --surface2:#131A26;
+  --border:#1E2840;
+  --purple:#7B4FE9;
+  --purple-light:#9B6FFF;
+  --purple-dim:#3D2870;
+  --purple-bg:#1A0F3A;
+  --cyan:#00E5FF;
+  --cyan-dim:#00A8BF;
+  --text:#E8EAF0;
+  --text-muted:#6B7A99;
+  --text-faint:#3A4460;
+  --glow-purple:0 0 30px rgba(123,79,233,0.35);
+  --glow-sm:0 0 12px rgba(123,79,233,0.2);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(ellipse at 15% 15%, rgba(123,79,233,0.1) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 85%, rgba(0,229,255,0.06) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(123,79,233,0.04) 0%, transparent 60%);
+  background-attachment:fixed;
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 48px;
+  background:rgba(5,6,15,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  z-index:100;
+}
+
+.nav-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:18px;font-weight:900;
+  letter-spacing:0.1em;
+  color:var(--text);
+}
+
+.nav-logo span{color:var(--purple-light);text-shadow:var(--glow-sm)}
+
+.nav-links{display:flex;gap:32px}
+
+.nav-links a{
+  font-size:12px;font-weight:500;
+  color:var(--text-muted);
+  text-decoration:none;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  transition:color .2s;
+}
+
+.nav-links a:hover{color:var(--cyan)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  position:relative;
+}
+
+.hero-eyebrow{
+  font-family:'Orbitron',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  margin-bottom:24px;
+  opacity:0;
+  animation:fadeUp .8s ease .2s forwards;
+}
+
+.hero-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(52px, 10vw, 96px);
+  font-weight:900;
+  letter-spacing:0.05em;
+  line-height:1;
+  margin-bottom:8px;
+  opacity:0;
+  animation:fadeUp .8s ease .4s forwards;
+}
+
+.hero-title .glow{
+  color:var(--purple-light);
+  text-shadow:0 0 40px rgba(123,79,233,0.6), 0 0 80px rgba(123,79,233,0.3);
+}
+
+.hero-tagline{
+  font-size:clamp(14px,2vw,18px);
+  color:var(--text-muted);
+  font-weight:300;
+  margin-bottom:48px;
+  max-width:480px;
+  opacity:0;
+  animation:fadeUp .8s ease .6s forwards;
+}
+
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;
+  background:var(--purple);
+  color:#fff;
+  font-family:'Inter',sans-serif;
+  font-size:14px;font-weight:500;
+  letter-spacing:0.05em;
+  text-decoration:none;
+  border-radius:99px;
+  box-shadow:var(--glow-purple);
+  transition:all .2s;
+  opacity:0;
+  animation:fadeUp .8s ease .8s forwards;
+}
+
+.hero-cta:hover{
+  background:var(--purple-light);
+  box-shadow:0 0 40px rgba(123,79,233,0.5);
+  transform:translateY(-2px);
+}
+
+.hero-scroll{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  font-size:11px;color:var(--text-faint);letter-spacing:0.15em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fadeUp .8s ease 1.2s forwards;
+}
+
+.scroll-line{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom, var(--purple), transparent);
+  animation:scrollPulse 2s ease infinite;
+}
+
+/* CANVAS RELÓGIO HERO */
+.hero-clock{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  opacity:0.07;
+  pointer-events:none;
+  z-index:0;
+}
+
+.hero-content{position:relative;z-index:1}
+
+/* SEÇÕES */
+section{padding:100px 24px}
+
+.section-inner{
+  max-width:960px;
+  margin:0 auto;
+}
+
+.section-label{
+  font-family:'Orbitron',sans-serif;
+  font-size:10px;font-weight:500;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--cyan);
+  margin-bottom:12px;
+}
+
+.section-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(24px,4vw,36px);
+  font-weight:700;
+  margin-bottom:16px;
+  letter-spacing:0.03em;
+}
+
+.section-title span{color:var(--purple-light)}
+
+.section-desc{
+  font-size:15px;color:var(--text-muted);
+  max-width:600px;line-height:1.8;
+  margin-bottom:56px;
+  font-weight:300;
+}
+
+/* SOBRE */
+.sobre-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.sobre-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:28px;
+  transition:all .2s;
+  position:relative;
+  overflow:hidden;
+}
+
+.sobre-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(123,79,233,0.4),transparent);
+  opacity:0;transition:.2s;
+}
+
+.sobre-card:hover{
+  border-color:rgba(123,79,233,0.3);
+  box-shadow:var(--glow-sm);
+  transform:translateY(-2px);
+}
+
+.sobre-card:hover::before{opacity:1}
+
+.card-icon{
+  font-size:28px;margin-bottom:14px;
+  display:block;
+}
+
+.card-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:0.08em;
+  color:var(--text);
+  margin-bottom:8px;
+  text-transform:uppercase;
+}
+
+.card-text{
+  font-size:13px;color:var(--text-muted);
+  line-height:1.7;font-weight:300;
+}
+
+/* FUNCIONALIDADES */
+.features{
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+.features-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.feature{
+  background:var(--surface);
+  padding:32px 28px;
+  transition:background .2s;
+}
+
+.feature:hover{background:var(--surface2)}
+
+.feature-num{
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;font-weight:700;
+  color:var(--purple-light);
+  letter-spacing:0.1em;
+  margin-bottom:14px;
+  opacity:0.6;
+}
+
+.feature-title{
+  font-size:15px;font-weight:500;
+  color:var(--text);
+  margin-bottom:8px;
+}
+
+.feature-desc{
+  font-size:13px;color:var(--text-muted);
+  line-height:1.7;font-weight:300;
+}
+
+/* TECNOLOGIAS */
+.tech-grid{
+  display:flex;flex-wrap:wrap;gap:10px;
+}
+
+.tech-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:99px;
+  font-size:13px;font-weight:500;
+  color:var(--text-muted);
+  transition:all .2s;
+}
+
+.tech-badge:hover{
+  border-color:var(--purple);
+  color:var(--purple-light);
+  box-shadow:var(--glow-sm);
+}
+
+.tech-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--purple-light);
+  box-shadow:0 0 6px var(--purple);
+}
+
+/* APRENDIZADOS */
+.learn-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.learn-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-size:13px;color:var(--text-muted);
+  font-weight:300;line-height:1.5;
+}
+
+.learn-icon{
+  color:var(--cyan);font-size:14px;
+  margin-top:1px;flex-shrink:0;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:40px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+
+.footer-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;font-weight:900;
+  letter-spacing:0.1em;color:var(--text-faint);
+}
+
+.footer-logo span{color:var(--purple-dim)}
+
+.footer-text{
+  font-size:12px;color:var(--text-faint);
+  letter-spacing:0.05em;
+}
+
+/* DIVISOR */
+.divider{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  margin:0 auto;
+}
+
+/* ANIMAÇÕES */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes scrollPulse{
+  0%,100%{opacity:0.3}
+  50%{opacity:1}
+}
+
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVO */
+@media(max-width:700px){
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+  .sobre-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .learn-list{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Krón<span>os</span></div>
+  <div class="nav-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#tecnologias">Tecnologias</a>
+    <a href="#aprendizados">Aprendizados</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas class="hero-clock" id="clockCanvas" width="600" height="600"></canvas>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Projeto de portfólio — Agenda pessoal</p>
+    <h1 class="hero-title">KRÓ<span class="glow">NOS</span></h1>
+    <p class="hero-tagline">Domine o seu tempo. Organize seus dias. Evolua como desenvolvedor.</p>
+    <a href="login.html" class="hero-cta">Acessar aplicação →</a>
+  </div>
+  <div class="hero-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-inner">
+    <p class="section-label reveal">O projeto</p>
+    <h2 class="section-title reveal">O que é o <span>Krónos</span>?</h2>
+    <p class="section-desc reveal">Krónos é uma aplicação web de agenda pessoal com suporte a múltiplos usuários. Cada pessoa cria sua conta, faz login e gerencia seu próprio calendário de tarefas — sem interferência de outros usuários. O nome vem de Kronos, o deus grego do tempo.</p>
+
+    <div class="sobre-grid">
+      <div class="sobre-card reveal">
+        <span class="card-icon">🗓</span>
+        <p class="card-title">Calendário visual</p>
+        <p class="card-text">Interface de calendário mensal onde você clica em qualquer dia para ver, adicionar, concluir e excluir tarefas. As tarefas aparecem como pequenos blocos dentro de cada dia.</p>
+      </div>
+      <div class="sobre-card reveal">
+        <span class="card-icon">🔐</span>
+        <p class="card-title">Multi-usuário</p>
+        <p class="card-text">Cada usuário tem sua própria conta com login e senha. As tarefas são completamente isoladas — nenhum usuário acessa os dados de outro.</p>
+      </div>
+      <div class="sobre-card reveal">
+        <span class="card-icon">⚙️</span>
+        <p class="card-title">Configurações</p>
+        <p class="card-text">Cada usuário pode mudar sua senha ou apagar sua conta a qualquer momento pela página de configurações, com validações de segurança.</p>
+      </div>
+      <div class="sobre-card reveal">
+        <span class="card-icon">💾</span>
+        <p class="card-title">Dados persistentes</p>
+        <p class="card-text">Todos os dados ficam salvos no localStorage do navegador. As tarefas permanecem mesmo após fechar e reabrir o navegador.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FUNCIONALIDADES -->
+<section id="funcionalidades" class="features">
+  <div class="section-inner">
+    <p class="section-label reveal">O que ele faz</p>
+    <h2 class="section-title reveal"><span>Funcionalidades</span></h2>
+    <p class="section-desc reveal">Tudo que foi construído do zero, linha por linha.</p>
+
+    <div class="features-grid reveal">
+      <div class="feature">
+        <p class="feature-num">01</p>
+        <p class="feature-title">Cadastro de conta</p>
+        <p class="feature-desc">Criação de usuário e senha com validações — campos obrigatórios, senha mínima de 6 caracteres e verificação de usuário duplicado.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-num">02</p>
+        <p class="feature-title">Login com sessão</p>
+        <p class="feature-desc">Autenticação por usuário e senha. A sessão é mantida no localStorage e protege todas as páginas de acesso não autorizado.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-num">03</p>
+        <p class="feature-title">Calendário mensal</p>
+        <p class="feature-desc">Grade de 7 colunas gerada dinamicamente pelo JavaScript com navegação entre meses e destaque automático no dia atual.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-num">04</p>
+        <p class="feature-title">Tarefas por dia</p>
+        <p class="feature-desc">Clique em qualquer dia para abrir o modal e adicionar tarefas. Suporta marcar como concluída, excluir e confirmar com Enter.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-num">05</p>
+        <p class="feature-title">Isolamento de dados</p>
+        <p class="feature-desc">As tarefas de cada usuário são salvas com uma chave única no localStorage, garantindo que nenhum dado seja compartilhado entre contas.</p>
+      </div>
+      <div class="feature">
+        <p class="feature-num">06</p>
+        <p class="feature-title">Gerenciamento de conta</p>
+        <p class="feature-desc">Página de configurações com troca de senha (validando a senha atual) e opção de apagar a conta com todas as tarefas associadas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECNOLOGIAS -->
+<section id="tecnologias">
+  <div class="section-inner">
+    <p class="section-label reveal">Stack</p>
+    <h2 class="section-title reveal"><span>Tecnologias</span> utilizadas</h2>
+    <p class="section-desc reveal">Projeto construído com tecnologias fundamentais do desenvolvimento front-end, sem frameworks ou bibliotecas externas.</p>
+
+    <div class="tech-grid reveal">
+      <div class="tech-badge"><span class="tech-dot"></span>HTML5</div>
+      <div class="tech-badge"><span class="tech-dot"></span>CSS3</div>
+      <div class="tech-badge"><span class="tech-dot"></span>JavaScript Vanilla</div>
+      <div class="tech-badge"><span class="tech-dot"></span>localStorage API</div>
+      <div class="tech-badge"><span class="tech-dot"></span>Canvas API</div>
+      <div class="tech-badge"><span class="tech-dot"></span>CSS Grid</div>
+      <div class="tech-badge"><span class="tech-dot"></span>CSS Flexbox</div>
+      <div class="tech-badge"><span class="tech-dot"></span>CSS Variables</div>
+      <div class="tech-badge"><span class="tech-dot"></span>Git & GitHub</div>
+      <div class="tech-badge"><span class="tech-dot"></span>Google Fonts</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APRENDIZADOS -->
+<section id="aprendizados">
+  <div class="section-inner">
+    <p class="section-label reveal">Jornada</p>
+    <h2 class="section-title reveal">O que foi <span>aprendido</span></h2>
+    <p class="section-desc reveal">Cada funcionalidade do Krónos foi construída do zero durante o aprendizado de desenvolvimento front-end.</p>
+
+    <div class="learn-list">
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Estrutura semântica de páginas HTML com formulários, inputs e navegação entre arquivos</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Estilização com CSS moderno, variáveis, Flexbox, Grid e animações</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Manipulação do DOM com JavaScript — criação dinâmica de elementos</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Eventos de formulário, clique e teclado com addEventListener</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Persistência de dados com localStorage, JSON.stringify e JSON.parse</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Métodos de array — .find(), .filter(), .map(), .push()</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Lógica de autenticação, sessão e proteção de rotas</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Separação de responsabilidades — HTML, CSS e JS em arquivos distintos</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Versionamento com Git — commits semânticos e push para GitHub</div>
+      <div class="learn-item reveal"><span class="learn-icon">→</span>Canvas API para renderização de gráficos animados em tempo real</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-logo">Krón<span>os</span></div>
+  <p class="footer-text">Projeto de portfólio — desenvolvido do zero</p>
+</footer>
+
+<script>
+// Relógio no hero
+const canvas = document.getElementById('clockCanvas')
+const ctx = canvas.getContext('2d')
+const S = 600, cx = 300, cy = 300, r = 280
+
+function drawClock() {
+  ctx.clearRect(0, 0, S, S)
+  const now = new Date()
+  const h = now.getHours() % 12, m = now.getMinutes(), s = now.getSeconds(), ms = now.getMilliseconds()
+  const aH = ((h + m/60) / 12) * Math.PI * 2 - Math.PI / 2
+  const aM = ((m + s/60) / 60) * Math.PI * 2 - Math.PI / 2
+  const aS = ((s + ms/1000) / 60) * Math.PI * 2 - Math.PI / 2
+
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2)
+  ctx.strokeStyle='rgba(123,79,233,0.15)'; ctx.lineWidth=1; ctx.stroke()
+
+  ctx.beginPath(); ctx.arc(cx,cy,r*.82,0,Math.PI*2)
+  ctx.strokeStyle='rgba(123,79,233,0.07)'; ctx.lineWidth=1; ctx.stroke()
+
+  for(let i=0;i<12;i++){
+    const a=(i/12)*Math.PI*2-Math.PI/2
+    ctx.beginPath()
+    ctx.moveTo(cx+Math.cos(a)*r*.88, cy+Math.sin(a)*r*.88)
+    ctx.lineTo(cx+Math.cos(a)*r*.96, cy+Math.sin(a)*r*.96)
+    ctx.strokeStyle='rgba(123,79,233,0.3)'; ctx.lineWidth=2; ctx.stroke()
+  }
+
+  for(let i=0;i<60;i++){
+    if(i%5===0) continue
+    const a=(i/60)*Math.PI*2-Math.PI/2
+    ctx.beginPath()
+    ctx.moveTo(cx+Math.cos(a)*r*.93, cy+Math.sin(a)*r*.93)
+    ctx.lineTo(cx+Math.cos(a)*r*.96, cy+Math.sin(a)*r*.96)
+    ctx.strokeStyle='rgba(123,79,233,0.12)'; ctx.lineWidth=1; ctx.stroke()
+  }
+
+  // Horas
+  ctx.beginPath(); ctx.moveTo(cx,cy)
+  ctx.lineTo(cx+Math.cos(aH)*r*.45, cy+Math.sin(aH)*r*.45)
+  ctx.strokeStyle='rgba(123,79,233,0.35)'; ctx.lineWidth=4; ctx.lineCap='round'; ctx.stroke()
+
+  // Minutos
+  ctx.beginPath(); ctx.moveTo(cx,cy)
+  ctx.lineTo(cx+Math.cos(aM)*r*.65, cy+Math.sin(aM)*r*.65)
+  ctx.strokeStyle='rgba(123,79,233,0.25)'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.stroke()
+
+  // Segundos
+  ctx.beginPath(); ctx.moveTo(cx,cy)
+  ctx.lineTo(cx+Math.cos(aS)*r*.75, cy+Math.sin(aS)*r*.75)
+  ctx.strokeStyle='rgba(0,229,255,0.4)'; ctx.lineWidth=1; ctx.lineCap='round'; ctx.stroke()
+
+  ctx.beginPath(); ctx.arc(cx,cy,4,0,Math.PI*2)
+  ctx.fillStyle='rgba(123,79,233,0.6)'; ctx.fill()
+
+  requestAnimationFrame(drawClock)
+}
+drawClock()
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
+}, { threshold: 0.15 })
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+</script>
+</body>
+</html>
